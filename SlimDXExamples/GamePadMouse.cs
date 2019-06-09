@@ -26,9 +26,10 @@ namespace SlimDXExamples
         }
 
         DirectInput Input = new DirectInput();
-        SlimDX.DirectInput.Joystick stick;
+        Joystick stick;
         Joystick[] Sticks;
-        bool mouseClicked = false;
+        bool mouseLeftClicked = false;
+        bool mouseRightClicked = false;
         int leftValueY = 0;
         int leftValueX = 0;
         int rightValueX = 0;
@@ -44,12 +45,12 @@ namespace SlimDXExamples
 
         public Joystick[] GetSticks()
         {
-            List<SlimDX.DirectInput.Joystick> Sticks = new List<SlimDX.DirectInput.Joystick>();
+            List<Joystick> Sticks = new List<Joystick>();
             foreach (DeviceInstance device in Input.GetDevices(DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly))
             {
                 try
                 {
-                    stick = new SlimDX.DirectInput.Joystick(Input, device.InstanceGuid);
+                    stick = new Joystick(Input, device.InstanceGuid);
                     stick.Acquire();
 
                     foreach (DeviceObjectInstance deviceObject in stick.GetObjects())
@@ -87,36 +88,36 @@ namespace SlimDXExamples
             {
                 if (buttons[1])
                 {
-                    if (mouseClicked == false)
+                    if (mouseLeftClicked == false)
                     {
                         mouse_event(MOUSEEVENT_LEFTDOWN, 0, 0, 0, 0);
-                        mouseClicked = true;
+                        mouseLeftClicked = true;
                     }
                 }
                 else
                 {
-                    if (mouseClicked == true)
+                    if (mouseLeftClicked == true)
                     {
                         mouse_event(MOUSEEVENT_LEFTUP, 0, 0, 0, 0);
-                        mouseClicked = false;
+                        mouseLeftClicked = false;
 
                     }
                 }
 
                 if (buttons[0])
                 {
-                    if (mouseClicked == false)
+                    if (mouseRightClicked == false)
                     {
                         mouse_event(MOUSEEVENT_RIGHTDOWN, 0, 0, 0, 0);
-                        mouseClicked = true;
+                        mouseRightClicked = true;
                     }
                 }
                 else
                 {
-                    if (mouseClicked == true)
+                    if (mouseRightClicked == true)
                     {
                         mouse_event(MOUSEEVENT_RIGHTUP, 0, 0, 0, 0);
-                        mouseClicked = false;
+                        mouseRightClicked = false;
 
                     }
                 }
@@ -125,14 +126,10 @@ namespace SlimDXExamples
         public void MouseMoveLeft(int posx, int posy)
         {
             Cursor.Position = new Point(Cursor.Position.X + posx / 3, Cursor.Position.Y + posy / 3);
-            Cursor.Clip = new Rectangle(Screen.PrimaryScreen.WorkingArea.Location, Screen.PrimaryScreen.WorkingArea.Size);
-            this.WindowState = FormWindowState.Minimized;
         }
         public void MouseMoveRight(int posx, int posy)
         {
             Cursor.Position = new Point(Cursor.Position.X + posx / 7, Cursor.Position.Y + posy / 7);
-            Cursor.Clip = new Rectangle(Screen.PrimaryScreen.WorkingArea.Location, Screen.PrimaryScreen.WorkingArea.Size);
-            this.WindowState = FormWindowState.Minimized;
         }
         private void mouseTimer_Tick(object sender, EventArgs e)
         {
