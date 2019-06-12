@@ -16,7 +16,7 @@ namespace SlimDXExamples
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GamePadMouse());
+            Application.Run(new GamePadValues());
         }
     }
 }
